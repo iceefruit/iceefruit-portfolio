@@ -29,10 +29,18 @@ export const ProfileSection: React.FC = () => {
           {/* Main ID Card */}
           <div className="bg-icee-surface/90 border border-icee-border rounded-2xl overflow-hidden shadow-cyber-card backdrop-blur-md">
             {/* Banner Dropzone / Container */}
-            <div className="relative h-32 w-full bg-gradient-to-r from-icee-dark via-icee-card to-icee-surface border-b border-icee-border overflow-hidden">
-              <div className="absolute inset-0 cyber-dots opacity-30" />
-              <div className="absolute bottom-2 right-4 text-[10px] font-mono text-icee-text-muted/60">
-                ASSET DROPZONE // /public/assets/banner.png
+            <div className="relative h-36 w-full bg-gradient-to-r from-icee-dark via-icee-card to-icee-surface border-b border-icee-border overflow-hidden">
+              <img
+                src="/assets/banner.svg"
+                alt="Iceefruit Banner"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLElement).style.display = 'none';
+                }}
+              />
+              <div className="absolute inset-0 cyber-dots opacity-20 pointer-events-none" />
+              <div className="absolute bottom-2 right-4 text-[10px] font-mono text-icee-text-muted/60 bg-icee-darker/70 px-2 py-0.5 rounded">
+                DROPZONE // /public/assets/banner.png
               </div>
             </div>
 
@@ -40,9 +48,14 @@ export const ProfileSection: React.FC = () => {
               {/* Avatar Dropzone with Glowing Frame */}
               <div className="relative -mt-12 mb-4 inline-block">
                 <div className="w-24 h-24 rounded-2xl bg-icee-dark border-2 border-icee-orange p-1 shadow-orange-glow relative overflow-hidden group">
-                  <div className="w-full h-full rounded-xl bg-icee-surface flex items-center justify-center text-icee-orange font-mono font-bold text-2xl">
-                    IF
-                  </div>
+                  <img
+                    src="/assets/pfp.svg"
+                    alt="Iceefruit Avatar"
+                    className="w-full h-full rounded-xl object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
+                  />
                 </div>
                 <span className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-green-500 border-2 border-icee-dark animate-pulse" />
               </div>

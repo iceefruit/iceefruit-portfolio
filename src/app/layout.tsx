@@ -1,12 +1,17 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
+
+export const viewport: Viewport = {
+  themeColor: '#FF5E00',
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: 'Iceefruit | Cybernetic Portfolio & Audio Lab',
   description: 'Personal portfolio, interactive 3D WebGL core, dual-deck DJ mixer station, and GitHub vault for Iceefruit.',
   keywords: ['Iceefruit', 'Portfolio', 'Full Stack Developer', 'WebGL', 'Three.js', 'Audio Mixer', 'Next.js'],
   authors: [{ name: 'Iceefruit' }],
-  themeColor: '#FF5E00',
   openGraph: {
     title: 'Iceefruit | Portfolio',
     description: 'Interactive 3D WebGL, Dual-Deck DJ Station & OS Project Explorer for Iceefruit.',
