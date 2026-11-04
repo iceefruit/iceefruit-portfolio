@@ -15,13 +15,14 @@ export const RepoVault: React.FC = () => {
   useEffect(() => {
     async function loadRepos() {
       try {
-        const res = await fetch('/api/github/repos?username=iceefruit');
+        const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'http://localhost:3000';
+        const res = await fetch(`${origin}/api/github/repos?username=iceefruit`);
         if (res.ok) {
           const data = await res.json();
           setRepos(data.repos || []);
         }
       } catch (err) {
-        console.error('Failed to load repos', err);
+        // Fallback gracefully without throwing
       } finally {
         setLoading(false);
       }
