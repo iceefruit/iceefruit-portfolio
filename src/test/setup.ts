@@ -76,4 +76,7 @@ if (typeof window !== 'undefined') {
       fillStyle: '',
     } as any;
   }) as any;
+
+  // Mock scrollIntoView
+  window.HTMLElement.prototype.scrollIntoView = () => {};
 }
