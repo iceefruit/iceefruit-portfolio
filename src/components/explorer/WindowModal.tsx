@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Square, Terminal } from 'lucide-react';
+import { X, Square, Terminal } from 'lucide-react';
 import { MiniAppSandbox } from './MiniAppSandbox';
 
 interface WindowModalProps {
@@ -33,24 +33,24 @@ export const WindowModal: React.FC<WindowModalProps> = ({
         role="dialog"
         aria-modal="true"
         aria-labelledby={`window-title-${title}`}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm pointer-events-auto"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm pointer-events-auto"
       >
         <motion.div
-          initial={{ opacity: 0, scale: 0.92, y: 15 }}
+          initial={{ opacity: 0, scale: 0.96, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.92, y: 15 }}
+          exit={{ opacity: 0, scale: 0.96, y: 12 }}
           transition={{ duration: 0.2 }}
-          className={`bg-icee-dark border border-icee-border shadow-2xl rounded-xl overflow-hidden flex flex-col transition-all duration-200 ${
+          className={`bg-icee-dark border border-icee-border shadow-2xl overflow-hidden flex flex-col transition-all duration-200 ${
             isMaximized
-              ? 'w-full h-full max-w-none max-h-none rounded-none'
-              : 'w-full max-w-2xl h-[520px]'
+              ? 'w-full h-full max-w-none max-h-none'
+              : 'w-full max-w-3xl h-[540px]'
           }`}
         >
           {/* OS Window Header / Title Bar */}
-          <div className="bg-icee-surface border-b border-icee-border px-4 py-2.5 flex items-center justify-between select-none">
-            <div className="flex items-center gap-2">
+          <div className="bg-icee-surface border-b border-icee-border px-4 py-3 flex items-center justify-between select-none">
+            <div className="flex items-center gap-2.5">
               <Terminal className="w-4 h-4 text-icee-orange" />
-              <span id={`window-title-${title}`} className="text-xs font-mono font-bold tracking-wider text-white">
+              <span id={`window-title-${title}`} className="text-xs font-mono font-bold tracking-widest text-white uppercase">
                 IceeOS // {title}
               </span>
             </div>
@@ -60,14 +60,14 @@ export const WindowModal: React.FC<WindowModalProps> = ({
               <button
                 onClick={onToggleMaximize}
                 title={isMaximized ? 'Restore Window' : 'Maximize Window'}
-                className="w-5 h-5 rounded flex items-center justify-center bg-icee-card hover:bg-icee-border text-icee-text-muted hover:text-white transition-colors cursor-pointer"
+                className="w-6 h-6 flex items-center justify-center bg-icee-dark border border-icee-border text-icee-text-muted hover:text-white hover:border-icee-orange transition-colors cursor-pointer"
               >
                 <Square className="w-3 h-3" />
               </button>
               <button
                 onClick={onClose}
                 title="Close Window"
-                className="w-5 h-5 rounded flex items-center justify-center bg-icee-card hover:bg-red-500/20 text-icee-text-muted hover:text-red-400 transition-colors cursor-pointer"
+                className="w-6 h-6 flex items-center justify-center bg-icee-dark border border-icee-border text-icee-text-muted hover:text-white hover:border-icee-orange transition-colors cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -75,7 +75,7 @@ export const WindowModal: React.FC<WindowModalProps> = ({
           </div>
 
           {/* Window Body / Interactive Mini-App */}
-          <div className="flex-1 overflow-hidden bg-icee-dark/95">
+          <div className="flex-1 overflow-hidden bg-icee-dark">
             <MiniAppSandbox appType={appType} data={data} />
           </div>
         </motion.div>

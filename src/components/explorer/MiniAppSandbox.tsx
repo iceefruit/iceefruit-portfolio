@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { Volume2, Play, Code2, ExternalLink, Sparkles, Box, Check, Copy } from 'lucide-react';
+import { Volume2, Box, Check, Copy, Activity } from 'lucide-react';
 
 interface MiniAppSandboxProps {
   appType: 'synth' | 'geometry' | 'spec';
@@ -19,20 +19,20 @@ export const MiniAppSandbox: React.FC<MiniAppSandboxProps> = ({ appType, data })
   return <ProjectSpecApp data={data} />;
 };
 
-/* --- 1. Synth Pad App --- */
+/* --- 1. Hardware-Style Synth Matrix App (Zero Emojis) --- */
 const SynthPadApp: React.FC = () => {
   const [activePad, setActivePad] = useState<number | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
   const pads = [
-    { id: 0, name: 'SUB BASS', color: 'orange', freq: 55, type: 'sawtooth' },
-    { id: 1, name: 'ACID ARP', color: 'orange', freq: 220, type: 'square' },
-    { id: 2, name: 'NEON CHORD', color: 'slate', freq: 440, type: 'triangle' },
-    { id: 3, name: 'CYBER LEAD', color: 'orange', freq: 659.25, type: 'sine' },
-    { id: 4, name: 'KICK DRUM', color: 'slate', isKick: true },
-    { id: 5, name: 'HI-HAT', color: 'slate', isHat: true },
-    { id: 6, name: 'SNARE SNAP', color: 'slate', isSnare: true },
-    { id: 7, name: 'LASER FX', color: 'orange', isLaser: true },
+    { id: 0, code: 'P-01', name: 'SUB BASS', spec: '55Hz SAW', color: 'orange', freq: 55, type: 'sawtooth' },
+    { id: 1, code: 'P-02', name: 'ACID ARP', spec: '220Hz SQR', color: 'orange', freq: 220, type: 'square' },
+    { id: 2, code: 'P-03', name: 'NEON CHORD', spec: '440Hz TRI', color: 'slate', freq: 440, type: 'triangle' },
+    { id: 3, code: 'P-04', name: 'CYBER LEAD', spec: '659Hz SIN', color: 'orange', freq: 659.25, type: 'sine' },
+    { id: 4, code: 'P-05', name: 'KICK DRUM', spec: '140->35Hz', color: 'slate', isKick: true },
+    { id: 5, code: 'P-06', name: 'HI-HAT', spec: '7kHz HPF', color: 'slate', isHat: true },
+    { id: 6, code: 'P-07', name: 'SNARE SNAP', spec: 'transient', color: 'slate', isSnare: true },
+    { id: 7, code: 'P-08', name: 'LASER FX', spec: '880->80Hz', color: 'orange', isLaser: true },
   ];
 
   const triggerSound = (pad: typeof pads[0]) => {
@@ -66,7 +66,6 @@ const SynthPadApp: React.FC = () => {
     }
 
     if (pad.isHat) {
-      // Noise burst for hi-hat
       const bufferSize = ctx.sampleRate * 0.05;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const output = buffer.getChannelData(0);
@@ -103,7 +102,6 @@ const SynthPadApp: React.FC = () => {
       return;
     }
 
-    // Melodic Synth Pad
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = (pad.type as OscillatorType) || 'sine';
@@ -117,12 +115,12 @@ const SynthPadApp: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full p-4 space-y-4">
-      <div className="flex items-center justify-between text-xs font-mono text-icee-text-muted border-b border-icee-border/70 pb-2">
-        <span className="flex items-center gap-1.5 text-white">
-          <Volume2 className="w-4 h-4 text-icee-orange" /> INTERACTIVE DSP BEAT PAD
+    <div className="flex flex-col h-full p-5 space-y-4 font-mono">
+      <div className="flex items-center justify-between text-xs text-icee-text-muted border-b border-icee-border pb-3">
+        <span className="flex items-center gap-2 text-white font-bold">
+          <Volume2 className="w-4 h-4 text-icee-orange" /> HARDWARE DSP BEAT MATRIX
         </span>
-        <span className="text-[11px] text-icee-orange">8-SLOT REALTIME SYNTH</span>
+        <span className="text-[11px] text-icee-orange">8-VOICE OSCILLATOR BANK</span>
       </div>
 
       <div className="grid grid-cols-4 gap-3 flex-1">
@@ -132,24 +130,43 @@ const SynthPadApp: React.FC = () => {
             <button
               key={p.id}
               onClick={() => triggerSound(p)}
-              className={`h-24 rounded-lg flex flex-col items-center justify-center p-2 font-mono text-xs font-bold transition-all duration-100 cursor-pointer select-none ${
+              className={`h-28 p-3 flex flex-col justify-between text-left border transition-all duration-100 cursor-pointer select-none ${
                 isActive
-                  ? 'bg-icee-orange text-icee-dark scale-95 shadow-orange-glow ring-2 ring-white'
+                  ? 'bg-icee-orange text-icee-darker border-white scale-[0.98]'
                   : p.color === 'orange'
-                  ? 'bg-icee-surface hover:bg-icee-card border border-icee-orange/40 text-icee-orange hover:shadow-orange-glow'
-                  : 'bg-icee-card hover:bg-icee-border/80 border border-icee-border text-icee-text-bright'
+                  ? 'bg-icee-surface hover:bg-icee-card border-icee-orange/50 text-white'
+                  : 'bg-icee-darker hover:bg-icee-surface border-icee-border text-icee-text-bright'
               }`}
             >
-              <span className="text-lg mb-1">{isActive ? '💥' : '⚡'}</span>
-              <span className="text-[10px] tracking-wider">{p.name}</span>
+              <div className="flex items-center justify-between w-full">
+                <span className={`text-[10px] ${isActive ? 'text-icee-darker font-bold' : 'text-icee-text-muted'}`}>
+                  {p.code}
+                </span>
+                <span
+                  className={`w-2 h-2 ${
+                    isActive
+                      ? 'bg-icee-darker'
+                      : p.color === 'orange'
+                      ? 'bg-icee-orange'
+                      : 'bg-icee-border-light'
+                  }`}
+                />
+              </div>
+              <div>
+                <div className="text-xs font-bold tracking-wider">{p.name}</div>
+                <div className={`text-[10px] mt-0.5 ${isActive ? 'text-icee-darker' : 'text-icee-orange'}`}>
+                  {p.spec}
+                </div>
+              </div>
             </button>
           );
         })}
       </div>
 
-      <p className="text-[11px] font-mono text-icee-text-muted text-center">
-        CLICK OR TAP ANY PAD TO GENERATE NATIVE AUDIO SYNTHESIS ON THE FLY
-      </p>
+      <div className="flex items-center justify-between pt-2 border-t border-icee-border text-[10px] text-icee-text-muted">
+        <span>ENGINE: NATIVE WEB AUDIO OSCILLATOR / NOISE BUFFER</span>
+        <span className="text-white">ZERO EXTERNAL SAMPLES</span>
+      </div>
     </div>
   );
 };
@@ -214,20 +231,20 @@ const GeometrySandboxApp: React.FC = () => {
   }, [shape]);
 
   return (
-    <div className="flex flex-col h-full p-4 space-y-3">
-      <div className="flex items-center justify-between text-xs font-mono text-icee-text-muted border-b border-icee-border/70 pb-2">
-        <span className="flex items-center gap-1.5 text-white">
-          <Box className="w-4 h-4 text-icee-orange" /> 3D GEOMETRY WIREFRAME SANDBOX
+    <div className="flex flex-col h-full p-5 space-y-3 font-mono">
+      <div className="flex items-center justify-between text-xs text-icee-text-muted border-b border-icee-border pb-3">
+        <span className="flex items-center gap-2 text-white font-bold">
+          <Box className="w-4 h-4 text-icee-orange" /> 3D WIREFRAME TOPOLOGY INSPECTOR
         </span>
-        <div className="flex gap-1.5">
+        <div className="flex gap-1">
           {(['torus', 'icosa', 'cube', 'octa'] as const).map((s) => (
             <button
               key={s}
               onClick={() => setShape(s)}
-              className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase cursor-pointer transition-colors ${
+              className={`px-2.5 py-1 text-[10px] font-mono uppercase cursor-pointer transition-colors ${
                 shape === s
                   ? 'bg-icee-orange text-icee-dark font-bold'
-                  : 'bg-icee-card text-icee-text-muted hover:text-white border border-icee-border'
+                  : 'bg-icee-surface text-icee-text-muted hover:text-white border border-icee-border'
               }`}
             >
               {s}
@@ -236,11 +253,15 @@ const GeometrySandboxApp: React.FC = () => {
         </div>
       </div>
 
-      <div ref={containerRef} className="flex-1 w-full min-h-[220px] rounded-lg bg-icee-darker border border-icee-border flex items-center justify-center" />
+      <div
+        ref={containerRef}
+        className="flex-1 w-full min-h-[220px] bg-icee-darker border border-icee-border flex items-center justify-center"
+      />
 
-      <p className="text-[11px] font-mono text-icee-text-muted text-center">
-        REAL-TIME THREE.JS WIREFRAME PROJECTION // 60 FPS HARDWARE ACCELERATED
-      </p>
+      <div className="flex items-center justify-between text-[10px] text-icee-text-muted">
+        <span>PROJECTION: PERSPECTIVE FOV 50</span>
+        <span className="text-icee-orange">60 FPS HARDWARE WEBGL</span>
+      </div>
     </div>
   );
 };
@@ -250,18 +271,18 @@ const ProjectSpecApp: React.FC<{ data?: any }> = ({ data }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'code' | 'metrics'>('overview');
   const [copied, setCopied] = useState(false);
 
-  const title = data?.title || 'Classified Project Specification';
+  const title = data?.title || 'Classified System Specification';
   const description = data?.description || 'Architecture specification and live telemetry.';
-  const codeSnippet = data?.codeSnippet || `// Edge Stream Resolver Kernel
-import { createServer } from 'node:http';
-import { verifyHmac } from '@/lib/crypto';
+  const codeSnippet =
+    data?.codeSnippet ||
+    `// Edge Stream Resolver Kernel — HMAC Verification
+import { createHmac, timingSafeEqual } from 'node:crypto';
 
-export async function handleRequest(req, res) {
-  const token = req.headers['x-icee-auth'];
-  if (!verifyHmac(token)) return res.writeHead(401).end();
-
-  const stream = await resolveTargetMedia({ timeout: 45 });
-  return stream.pipe(res);
+export function verifyEdgeSignature(payload: string, sig: string, secret: string): boolean {
+  const digest = createHmac('sha256', secret).update(payload).digest();
+  const candidate = Buffer.from(sig, 'hex');
+  if (digest.length !== candidate.length) return false;
+  return timingSafeEqual(digest, candidate);
 }`;
 
   const copyCode = () => {
@@ -271,17 +292,16 @@ export async function handleRequest(req, res) {
   };
 
   return (
-    <div className="flex flex-col h-full p-4 space-y-4 font-mono">
-      {/* Tabs */}
-      <div className="flex items-center justify-between border-b border-icee-border/70 pb-2">
-        <div className="flex gap-2">
+    <div className="flex flex-col h-full p-5 space-y-4 font-mono">
+      <div className="flex items-center justify-between border-b border-icee-border pb-3">
+        <div className="flex gap-1.5">
           {(['overview', 'code', 'metrics'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-3 py-1 rounded text-xs font-bold uppercase transition-colors cursor-pointer ${
+              className={`px-3 py-1 text-xs font-bold uppercase transition-colors cursor-pointer ${
                 activeTab === tab
-                  ? 'bg-icee-orange text-icee-dark shadow-orange-glow'
+                  ? 'bg-icee-orange text-icee-dark'
                   : 'bg-icee-surface text-icee-text-muted hover:text-white border border-icee-border'
               }`}
             >
@@ -292,26 +312,33 @@ export async function handleRequest(req, res) {
         {activeTab === 'code' && (
           <button
             onClick={copyCode}
-            className="flex items-center gap-1 text-[11px] text-icee-text-muted hover:text-icee-orange cursor-pointer"
+            className="flex items-center gap-1.5 text-[11px] text-icee-text-muted hover:text-icee-orange cursor-pointer"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'COPIED' : 'COPY'}
+            {copied ? <Check className="w-3.5 h-3.5 text-icee-orange" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? 'COPIED' : 'COPY BUFFER'}
           </button>
         )}
       </div>
 
-      {/* Tab Contents */}
-      <div className="flex-1 overflow-y-auto bg-icee-darker p-4 rounded-lg border border-icee-border text-xs">
+      <div className="flex-1 overflow-y-auto bg-icee-darker p-4 border border-icee-border text-xs">
         {activeTab === 'overview' && (
-          <div className="space-y-3">
+          <div className="space-y-4">
             <h4 className="text-sm font-bold text-white tracking-wide">{title}</h4>
             <p className="text-icee-text-muted leading-relaxed">{description}</p>
+            {data?.architectureSummary && (
+              <div className="border-l-2 border-icee-orange pl-3 py-1 text-white">
+                {data.architectureSummary}
+              </div>
+            )}
             {data?.techStack && (
               <div className="pt-2">
-                <span className="text-[11px] text-icee-orange font-bold">TECH STACK:</span>
-                <div className="flex flex-wrap gap-1.5 mt-1.5">
+                <span className="text-[11px] text-icee-orange font-bold">RUNTIME STACK:</span>
+                <div className="flex flex-wrap gap-1.5 mt-2">
                   {data.techStack.map((tech: string) => (
-                    <span key={tech} className="px-2 py-0.5 bg-icee-surface border border-icee-border rounded text-[10px] text-white">
+                    <span
+                      key={tech}
+                      className="px-2.5 py-0.5 bg-icee-surface border border-icee-border text-[10px] text-white"
+                    >
                       {tech}
                     </span>
                   ))}
@@ -329,17 +356,19 @@ export async function handleRequest(req, res) {
 
         {activeTab === 'metrics' && (
           <div className="space-y-3">
-            <h4 className="text-xs font-bold text-icee-orange">INTERNAL VERIFIED METRICS</h4>
+            <h4 className="text-xs font-bold text-icee-orange">VERIFIED PRODUCTION TELEMETRY</h4>
             <div className="grid grid-cols-2 gap-3">
-              {(data?.metrics || [
-                { label: 'Latency', value: '< 5ms' },
-                { label: 'Success Rate', value: '99.98%' },
-                { label: 'Ops/Sec', value: '45,000' },
-                { label: 'Memory Footprint', value: '18MB' },
-              ]).map((m: any, idx: number) => (
-                <div key={idx} className="bg-icee-surface border border-icee-border p-3 rounded">
-                  <div className="text-[10px] text-icee-text-muted">{m.label}</div>
-                  <div className="text-base font-bold text-white mt-0.5">{m.value}</div>
+              {(
+                data?.metrics || [
+                  { label: 'Latency', value: '< 5ms' },
+                  { label: 'Success Rate', value: '99.98%' },
+                  { label: 'Ops/Sec', value: '45,000' },
+                  { label: 'Memory Footprint', value: '18MB' },
+                ]
+              ).map((m: any, idx: number) => (
+                <div key={idx} className="bg-icee-surface border border-icee-border p-3">
+                  <div className="text-[10px] text-icee-text-muted uppercase">{m.label}</div>
+                  <div className="text-base font-bold text-white mt-1">{m.value}</div>
                 </div>
               ))}
             </div>

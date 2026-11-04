@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Terminal, CornerDownLeft, Sparkles } from 'lucide-react';
+import { Terminal, CornerDownLeft } from 'lucide-react';
 import { profileData } from '@/data/profile';
 import { getAudioEngine } from '@/lib/audioEngine';
 
@@ -20,9 +20,11 @@ export const CyberTerminal: React.FC = () => {
       output: (
         <div className="space-y-1 text-icee-text-muted">
           <p className="text-white font-bold">
-            IceeOS Shell v1.0.4 [x86_64-antigravity]
+            IceeOS Kernel v2.4.0 [x86_64-monograph]
           </p>
-          <p>Type <span className="text-icee-orange font-bold">help</span> to view available system commands.</p>
+          <p>
+            Type <span className="text-icee-orange font-bold">help</span> to inspect available system commands.
+          </p>
         </div>
       ),
     },
@@ -41,7 +43,7 @@ export const CyberTerminal: React.FC = () => {
     const trimmed = cmd.trim().toLowerCase();
     if (!trimmed) return;
 
-    setCmdHistory(prev => [trimmed, ...prev]);
+    setCmdHistory((prev) => [trimmed, ...prev]);
     setHistoryIdx(-1);
 
     let output: React.ReactNode;
@@ -51,12 +53,24 @@ export const CyberTerminal: React.FC = () => {
         output = (
           <div className="space-y-1 text-xs text-icee-text-muted">
             <p className="text-white font-bold mb-1">AVAILABLE COMMANDS:</p>
-            <p><span className="text-icee-orange w-24 inline-block">about</span> : Read Iceefruit biography and technical focus</p>
-            <p><span className="text-icee-orange w-24 inline-block">skills</span> : Output technical proficiencies and stacks</p>
-            <p><span className="text-icee-orange w-24 inline-block">projects</span> : Output list of primary software systems</p>
-            <p><span className="text-icee-orange w-24 inline-block">mix</span> : Trigger Deck A playback in the audio lab</p>
-            <p><span className="text-icee-orange w-24 inline-block">contact</span> : Transmit uplink info (Email, Discord, GitHub)</p>
-            <p><span className="text-icee-orange w-24 inline-block">clear</span> : Wipe terminal history screen</p>
+            <p>
+              <span className="text-icee-orange w-24 inline-block">about</span> : Operator dossier &amp; architectural thesis
+            </p>
+            <p>
+              <span className="text-icee-orange w-24 inline-block">skills</span> : Production runtimes &amp; engineering domains
+            </p>
+            <p>
+              <span className="text-icee-orange w-24 inline-block">projects</span> : Case studies &amp; benchmark summaries
+            </p>
+            <p>
+              <span className="text-icee-orange w-24 inline-block">mix</span> : Trigger Deck A synth stream in Audio Lab
+            </p>
+            <p>
+              <span className="text-icee-orange w-24 inline-block">contact</span> : Direct transmission channels
+            </p>
+            <p>
+              <span className="text-icee-orange w-24 inline-block">clear</span> : Flush terminal buffer
+            </p>
           </div>
         );
         break;
@@ -64,7 +78,9 @@ export const CyberTerminal: React.FC = () => {
       case 'about':
         output = (
           <div className="space-y-1.5 text-xs text-icee-text-muted leading-relaxed">
-            <p className="text-white font-bold">{profileData.name} — {profileData.title}</p>
+            <p className="text-white font-bold">
+              {profileData.name} // {profileData.title}
+            </p>
             <p>{profileData.bio}</p>
             <p className="text-icee-orange font-mono">STATUS: {profileData.status}</p>
           </div>
@@ -73,13 +89,19 @@ export const CyberTerminal: React.FC = () => {
 
       case 'skills':
         output = (
-          <div className="grid grid-cols-2 gap-2 text-xs text-icee-text-muted">
-            {profileData.skills.map((s, i) => (
-              <div key={i} className="flex justify-between border-b border-icee-border/40 py-1">
-                <span className="text-white">{s.name}</span>
-                <span className="text-icee-orange font-bold">{s.level}%</span>
-              </div>
-            ))}
+          <div className="space-y-1.5 text-xs text-icee-text-muted">
+            <div className="border-b border-icee-border/50 py-1">
+              <span className="text-icee-orange font-bold">01 EDGE &amp; API:</span>{' '}
+              <span className="text-white">TypeScript, Next.js 15, FastAPI, Node.js, HMAC-SHA256</span>
+            </div>
+            <div className="border-b border-icee-border/50 py-1">
+              <span className="text-icee-orange font-bold">02 ML &amp; QUANT:</span>{' '}
+              <span className="text-white">ONNX Runtime INT8, Faster-Whisper, ZeroMQ, MQL5/C++</span>
+            </div>
+            <div className="py-1">
+              <span className="text-icee-orange font-bold">03 GRAPHICS/DSP:</span>{' '}
+              <span className="text-white">Three.js WebGL, Web Audio API, Biquad/FFT Synthesis</span>
+            </div>
           </div>
         );
         break;
@@ -87,12 +109,16 @@ export const CyberTerminal: React.FC = () => {
       case 'projects':
         output = (
           <div className="space-y-1 text-xs text-icee-text-muted">
-            <p className="text-white font-bold">ACTIVE ARTIFACTS:</p>
-            <p>• <span className="text-icee-orange">Audio Synth Lab</span> — Web Audio API DSP synthesis engine</p>
-            <p>• <span className="text-icee-orange">3D Wireframe Core</span> — Three.js hardware-accelerated scene</p>
-            <p>• <span className="text-icee-orange">ExML Engine</span> — Sub-5ms predictive inference pipeline</p>
-            <p>• <span className="text-icee-orange">GoldAlgo MT5</span> — Institutional quant risk architecture</p>
-            <p>• <span className="text-icee-orange">City-Api</span> — Vector SVG cartography generator</p>
+            <p className="text-white font-bold">VERIFIED PRODUCTION SYSTEMS:</p>
+            <p>
+              [01] <span className="text-icee-orange">City-Api</span> : 310ms Vector SVG Cartographic Compiler
+            </p>
+            <p>
+              [02] <span className="text-icee-orange">Transparent/Transcribe</span> : INT8 ONNX &amp; Whisper Mesh (-75% RAM)
+            </p>
+            <p>
+              [03] <span className="text-icee-orange">ExML / GoldAlgo</span> : 1.2ms ZeroMQ Quantitative Bridge
+            </p>
           </div>
         );
         break;
@@ -101,18 +127,39 @@ export const CyberTerminal: React.FC = () => {
         try {
           const engine = getAudioEngine();
           engine.init().then(() => engine.play('A'));
-          output = <p className="text-icee-orange">SIGNAL SENT // Deck A audio playback triggered.</p>;
+          output = <p className="text-icee-orange">SIGNAL DISPATCHED // Deck A audio stream active.</p>;
         } catch {
-          output = <p className="text-red-400">Audio context initialization blocked by browser policy. Click Play on Deck directly.</p>;
+          output = (
+            <p className="text-red-400">
+              AudioContext requires direct hardware gesture. Click PLAY CUE on Deck A.
+            </p>
+          );
         }
         break;
 
       case 'contact':
         output = (
           <div className="space-y-1 text-xs text-icee-text-muted">
-            <p>• Email: <a href="mailto:iceefruit.2@gmail.com" className="text-white underline">iceefruit.2@gmail.com</a></p>
-            <p>• Discord: <span className="text-white">iceefruit</span></p>
-            <p>• GitHub: <a href="https://github.com/iceefruit" target="_blank" rel="noreferrer" className="text-icee-orange underline">github.com/iceefruit</a></p>
+            <p>
+              EMAIL:{' '}
+              <a href="mailto:iceefruit.2@gmail.com" className="text-white underline">
+                iceefruit.2@gmail.com
+              </a>
+            </p>
+            <p>
+              DISCORD: <span className="text-white">iceefruit</span>
+            </p>
+            <p>
+              GITHUB:{' '}
+              <a
+                href="https://github.com/iceefruit"
+                target="_blank"
+                rel="noreferrer"
+                className="text-icee-orange underline"
+              >
+                github.com/iceefruit
+              </a>
+            </p>
           </div>
         );
         break;
@@ -125,12 +172,12 @@ export const CyberTerminal: React.FC = () => {
       default:
         output = (
           <p className="text-xs text-red-400">
-            command not found: {trimmed}. Type <span className="text-white underline">help</span> for command directory.
+            unknown directive: {trimmed}. Type <span className="text-white underline">help</span> for command list.
           </p>
         );
     }
 
-    setHistory(prev => [
+    setHistory((prev) => [
       ...prev,
       {
         id: Date.now(),
@@ -167,38 +214,40 @@ export const CyberTerminal: React.FC = () => {
   return (
     <div
       onClick={() => inputRef.current?.focus()}
-      className="w-full bg-icee-dark/95 border border-icee-border rounded-xl p-5 font-mono shadow-2xl backdrop-blur-md cursor-text"
+      className="w-full bg-icee-dark border border-icee-border p-5 font-mono cursor-text flex flex-col justify-between min-h-[340px]"
     >
-      {/* Title Bar */}
-      <div className="flex items-center justify-between pb-3 border-b border-icee-border/70 mb-4 text-xs">
-        <div className="flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-icee-orange" />
-          <span className="font-bold text-white tracking-wider">
-            iceefruit@workstation:~
-          </span>
-        </div>
-        <div className="flex items-center gap-2 text-icee-text-muted text-[11px]">
-          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span>CONNECTED</span>
-        </div>
-      </div>
-
-      {/* Terminal History */}
-      <div className="space-y-3 max-h-72 overflow-y-auto pr-2 text-xs">
-        {history.map((item) => (
-          <div key={item.id} className="space-y-1">
-            <div className="flex items-center gap-2 text-white">
-              <span className="text-icee-orange font-bold">icee@system:~$</span>
-              <span>{item.command}</span>
-            </div>
-            <div className="pl-4">{item.output}</div>
+      <div>
+        {/* Title Bar */}
+        <div className="flex items-center justify-between pb-3 border-b border-icee-border mb-4 text-xs">
+          <div className="flex items-center gap-2">
+            <Terminal className="w-4 h-4 text-icee-orange" />
+            <span className="font-bold text-white tracking-wider">
+              iceefruit@workstation:~
+            </span>
           </div>
-        ))}
-        <div ref={bottomRef} />
+          <div className="flex items-center gap-2 text-icee-text-muted text-[10px]">
+            <span className="w-2 h-2 bg-icee-orange inline-block" />
+            <span>ONLINE</span>
+          </div>
+        </div>
+
+        {/* Terminal History */}
+        <div className="space-y-3 max-h-64 overflow-y-auto pr-2 text-xs">
+          {history.map((item) => (
+            <div key={item.id} className="space-y-1">
+              <div className="flex items-center gap-2 text-white">
+                <span className="text-icee-orange font-bold">icee@system:~$</span>
+                <span>{item.command}</span>
+              </div>
+              <div className="pl-4">{item.output}</div>
+            </div>
+          ))}
+          <div ref={bottomRef} />
+        </div>
       </div>
 
       {/* Input Prompt */}
-      <div className="flex items-center gap-2 mt-4 pt-3 border-t border-icee-border/50 text-xs">
+      <div className="flex items-center gap-2 mt-4 pt-3 border-t border-icee-border text-xs">
         <span className="text-icee-orange font-bold select-none">icee@system:~$</span>
         <input
           ref={inputRef}

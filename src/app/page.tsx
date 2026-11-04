@@ -4,12 +4,13 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { Navbar } from '@/components/nav/Navbar';
 import { HeroSection } from '@/components/hero/HeroSection';
+import { CaseStudyChapters } from '@/components/casestudies/CaseStudyChapters';
 import { ProfileSection } from '@/components/profile/ProfileSection';
-import { DjMixerStation } from '@/components/mixer/DjMixerStation';
 import { FolderExplorer } from '@/components/explorer/FolderExplorer';
+import { DjMixerStation } from '@/components/mixer/DjMixerStation';
 import { RepoVault } from '@/components/github/RepoVault';
 import { ContactUplink } from '@/components/contact/ContactUplink';
-import { Terminal, Shield, ArrowUp } from 'lucide-react';
+import { Terminal, ArrowUp } from 'lucide-react';
 
 // Dynamic import with SSR disabled for Three.js canvas to ensure smooth client rendering
 const SceneCanvas = dynamic(
@@ -27,67 +28,73 @@ export default function Home() {
       {/* 3D WebGL Dynamic Background Canvas */}
       <SceneCanvas />
 
-      {/* Persistent Navigation */}
+      {/* Persistent Outer-Edge Editorial Header */}
       <Navbar />
 
-      {/* Main Narrative Flow */}
-      <main className="relative z-10 flex flex-col space-y-12 md:space-y-20 pb-20">
-        {/* Section 1: Hero Station */}
+      {/* Main Narrative Flow — Seamless Exposed Hairline Chapters */}
+      <main className="relative z-10 flex flex-col">
+        {/* Chapter 00: Opening Editorial Poster & Telemetry Strip */}
         <HeroSection />
 
-        {/* Section 2: Load Profile & Cyber Terminal */}
+        {/* Chapter 01: Selected Engineering Case Studies & Custom SVG Schematics */}
+        <CaseStudyChapters />
+
+        {/* Chapter 02: Operator Dossier, Dual Avatar Matrix, CLI & Capability Index */}
         <ProfileSection />
 
-        {/* Section 3: Dual-Deck DJ Mixer Station */}
-        <DjMixerStation />
-
-        {/* Section 4: OS Desktop Folder Explorer */}
+        {/* Chapter 03: Interactive Specimen Cabinet & IceeOS Sandbox */}
         <FolderExplorer />
 
-        {/* Section 5: GitHub Code Vault */}
+        {/* Chapter 04: Dual-Deck Web Audio DSP Console & 64-Bin FFT Visualizer */}
+        <DjMixerStation />
+
+        {/* Chapter 05: Live GitHub Code Index & Classified Vault */}
         <RepoVault />
 
-        {/* Section 6: Direct Transmission Uplink */}
+        {/* Chapter 06: Direct Transmission Uplink Finale */}
         <ContactUplink />
       </main>
 
-      {/* Cybernetic Footer */}
-      <footer className="relative z-10 border-t border-icee-border/80 bg-icee-darker/90 backdrop-blur-md py-10 px-4 font-mono text-xs">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-icee-surface border border-icee-border flex items-center justify-center text-icee-orange">
+      {/* Editorial Colophon Footer */}
+      <footer className="relative z-10 border-t border-icee-border bg-icee-darker py-12 px-4 md:px-8 font-mono text-xs">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          <div className="md:col-span-5 flex items-center gap-3.5">
+            <div className="w-8 h-8 bg-icee-surface border border-icee-border flex items-center justify-center text-icee-orange">
               <Terminal className="w-4 h-4" />
             </div>
             <div>
-              <div className="font-bold text-white text-sm">
-                <span className="text-icee-orange">Icee</span>fruit Core System
+              <div className="font-bold text-white text-xs uppercase tracking-widest">
+                <span className="text-icee-orange">Icee</span>fruit // Precision Systems Monograph
               </div>
-              <div className="text-[11px] text-icee-text-muted">
-                DESIGNED &amp; ENGINEERED FOR HIGH-IMPACT COMPUTING
+              <div className="text-[10px] text-icee-text-muted tracking-wider mt-0.5">
+                60% OBSIDIAN (#0B0C10) · 30% STRUCTURAL HAIRLINE (#2A2E39) · 10% SIGNAL ORANGE (#FF5E00)
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-6 text-icee-text-muted text-[11px]">
-            <span className="flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-green-500" />
-              ALL SYSTEMS OPERATIONAL
+          <div className="md:col-span-4 flex flex-wrap items-center gap-6 text-icee-text-muted text-[10px] tracking-widest uppercase">
+            <span className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-icee-orange" />
+              ALL CORES ONLINE
             </span>
-            <span>60-30-10 MONOCHROME &amp; ORANGE</span>
+            <span>ZERO AI SLOP // HAND-ENGINEERED</span>
           </div>
 
-          <button
-            onClick={scrollToTop}
-            title="Return to Core Top"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-icee-surface hover:bg-icee-card border border-icee-border text-icee-text-muted hover:text-white transition-colors cursor-pointer"
-          >
-            <span>TOP OF CORE</span>
-            <ArrowUp className="w-3.5 h-3.5 text-icee-orange" />
-          </button>
+          <div className="md:col-span-3 flex md:justify-end">
+            <button
+              onClick={scrollToTop}
+              title="Return to Top of Monograph"
+              className="flex items-center gap-2 px-4 py-2 bg-icee-surface hover:bg-icee-orange hover:text-icee-dark border border-icee-border hover:border-icee-orange text-icee-text-muted transition-colors cursor-pointer text-[10px] tracking-widest uppercase font-bold"
+            >
+              <span>RETURN TO 00</span>
+              <ArrowUp className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
-        <div className="max-w-6xl mx-auto mt-6 pt-4 border-t border-icee-border/40 text-center text-[10px] text-icee-text-muted/60">
-          © {new Date().getFullYear()} Iceefruit. All rights reserved. Open source under MIT license.
+        <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-icee-border/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-icee-text-muted tracking-widest uppercase">
+          <span>© {new Date().getFullYear()} ICEEFRUIT (@ICEEFRUIT). OPEN SOURCE UNDER MIT LICENSE.</span>
+          <span>SPACE GROTESK · INSTRUMENT SERIF · JETBRAINS MONO</span>
         </div>
       </footer>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Radio, Activity, RefreshCw } from 'lucide-react';
+import { Radio, RefreshCw } from 'lucide-react';
 import { getAudioEngine } from '@/lib/audioEngine';
 import { DeckChannel } from './DeckChannel';
 import { AudioVisualizer } from './AudioVisualizer';
@@ -33,112 +33,113 @@ export const DjMixerStation: React.FC = () => {
   };
 
   return (
-    <section id="audio-lab" className="w-full max-w-5xl mx-auto px-4 py-16">
-      {/* Station Title */}
-      <div className="flex flex-col items-center text-center mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-icee-surface border border-icee-border text-xs font-mono text-icee-orange mb-3">
-          <Activity className="w-3.5 h-3.5 animate-pulse" />
-          <span>REAL-TIME WEB AUDIO DSP // DUAL-DECK STATION</span>
-        </div>
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
-          AUDIO MIXER &amp; SOUND LAB
-        </h2>
-        <p className="mt-2 text-sm text-icee-text-muted max-w-xl">
-          Interact with the live crossfader, adjust analog-style biquad lowpass filters, preview synthesized acid and lofi stems, or drop in your own audio tracks.
-        </p>
-      </div>
-
-      {/* Main Console Box */}
-      <div className="bg-icee-dark/80 border border-icee-border rounded-2xl p-6 md:p-8 backdrop-blur-xl shadow-2xl relative overflow-hidden">
-        {/* Subtle grid pattern background */}
-        <div className="absolute inset-0 cyber-grid opacity-10 pointer-events-none" />
-
-        {/* Master Visualizer Display */}
-        <div className="mb-6 p-4 rounded-xl bg-icee-darker/90 border border-icee-border flex flex-col items-center">
-          <div className="w-full flex items-center justify-between mb-2 px-2 text-xs font-mono text-icee-text-muted">
-            <span className="flex items-center gap-1.5 text-white">
-              <Radio className="w-3.5 h-3.5 text-icee-orange" /> MASTER SPECTRUM
-            </span>
-            <span className="text-[11px] text-icee-orange">
-              CROSSFADER: {Math.round((1 - crossfader) * 100)}% A / {Math.round(crossfader * 100)}% B
-            </span>
+    <section id="audio-lab" className="w-full border-t border-icee-border bg-icee-dark/90">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-20 md:py-28">
+        {/* Chapter Header — 12-Column Asymmetric Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-14 border-b border-icee-border items-end">
+          <div className="lg:col-span-3 font-mono text-xs uppercase tracking-widest text-icee-text-muted space-y-1">
+            <div className="text-icee-orange font-bold">CHAPTER 04 // ACOUSTIC HARDWARE</div>
+            <div>WEB AUDIO DSP // DUAL-DECK CONSOLE</div>
           </div>
-          <AudioVisualizer height={70} className="border-none bg-transparent" />
+          <div className="lg:col-span-9">
+            <h2 className="display-chapter text-white">
+              AUDIO MIXER &amp; SOUND LAB
+            </h2>
+            <p className="mt-4 text-base text-icee-text-muted max-w-2xl leading-relaxed">
+              Equal-power cosine/sine crossfading, real-time biquad lowpass filtering, procedural 128 BPM acid and 90 BPM ambient synthesizers, and custom audio buffer decoding.
+            </p>
+          </div>
         </div>
 
-        {/* Dual Decks + Mixer Column */}
-        <div className="flex flex-col lg:flex-row gap-6 items-stretch">
-          {/* Deck A */}
-          <DeckChannel deck="A" onStateChange={() => setRefreshKey(k => k + 1)} />
-
-          {/* Central Crossfader Section */}
-          <div className="w-full lg:w-64 bg-icee-surface/70 border border-icee-border rounded-xl p-5 flex flex-col justify-between items-center text-center">
-            <div className="w-full">
-              <span className="text-xs font-mono font-bold tracking-widest text-icee-text-bright">
-                MIXER CONTROLLER
+        {/* Main Industrial Console Frame */}
+        <div className="border-l border-r border-b border-icee-border bg-icee-darker">
+          {/* Master Spectrum Bus */}
+          <div className="p-6 border-b border-icee-border bg-icee-dark/80">
+            <div className="w-full flex flex-wrap items-center justify-between gap-2 mb-3 font-mono text-xs">
+              <span className="flex items-center gap-2 text-white font-bold">
+                <Radio className="w-4 h-4 text-icee-orange" /> MASTER FFT SPECTRUM ANALYZER (64-BIN)
               </span>
-              <p className="text-[10px] font-mono text-icee-text-muted mt-0.5">
-                EQUAL-POWER CURVE
-              </p>
+              <span className="text-icee-orange font-bold">
+                BUS GAIN: {Math.round((1 - crossfader) * 100)}% DECK A // {Math.round(crossfader * 100)}% DECK B
+              </span>
             </div>
-
-            {/* Quick Cut Buttons */}
-            <div className="flex gap-2 w-full my-4">
-              <button
-                onClick={handleCutA}
-                className="flex-1 py-1.5 rounded bg-icee-card hover:bg-icee-border text-[10px] font-mono font-semibold text-white border border-icee-border cursor-pointer transition-colors"
-              >
-                100% A
-              </button>
-              <button
-                onClick={handleCutCenter}
-                title="Center Crossfade"
-                className="p-1.5 rounded bg-icee-card hover:bg-icee-border text-icee-orange border border-icee-border cursor-pointer transition-colors"
-              >
-                <RefreshCw className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={handleCutB}
-                className="flex-1 py-1.5 rounded bg-icee-card hover:bg-icee-border text-[10px] font-mono font-semibold text-white border border-icee-border cursor-pointer transition-colors"
-              >
-                100% B
-              </button>
-            </div>
-
-            {/* Crossfader Slider */}
-            <div className="w-full space-y-2">
-              <div className="flex justify-between text-xs font-mono font-bold">
-                <span className={crossfader < 0.4 ? 'text-icee-orange' : 'text-icee-text-muted'}>
-                  DECK A
-                </span>
-                <span className={crossfader > 0.6 ? 'text-icee-orange' : 'text-icee-text-muted'}>
-                  DECK B
-                </span>
-              </div>
-              <input
-                type="range"
-                aria-label="crossfader"
-                min="0"
-                max="1"
-                step="0.01"
-                value={crossfader}
-                onChange={handleCrossfaderChange}
-                className="w-full h-3 bg-icee-dark border border-icee-border rounded-lg appearance-none cursor-pointer accent-icee-orange shadow-inner"
-              />
-              <div className="flex justify-between text-[10px] font-mono text-icee-text-muted">
-                <span>CH A</span>
-                <span>CENTER</span>
-                <span>CH B</span>
-              </div>
-            </div>
-
-            <div className="mt-4 pt-3 border-t border-icee-border/50 w-full text-[10px] font-mono text-icee-text-muted">
-              DROP AUDIO FILE ONTO EITHER DECK TO MIX
-            </div>
+            <AudioVisualizer height={72} className="rounded-none border-icee-border bg-icee-darker" />
           </div>
 
-          {/* Deck B */}
-          <DeckChannel deck="B" onStateChange={() => setRefreshKey(k => k + 1)} />
+          {/* 3-Column Hardware Deck Split */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-icee-border">
+            <div className="lg:col-span-5 flex">
+              <DeckChannel deck="A" onStateChange={() => setRefreshKey((k) => k + 1)} />
+            </div>
+
+            {/* Central Crossfader Unit */}
+            <div className="lg:col-span-2 bg-icee-surface/60 p-6 flex flex-col justify-between items-center text-center font-mono">
+              <div className="w-full border-b border-icee-border pb-3">
+                <span className="text-xs font-bold tracking-widest text-white block">
+                  X-FADE BUS
+                </span>
+                <span className="text-[10px] text-icee-orange">COS / SIN LAW</span>
+              </div>
+
+              {/* Quick Cut Relays */}
+              <div className="grid grid-cols-3 gap-1.5 w-full my-6">
+                <button
+                  onClick={handleCutA}
+                  className="py-2 bg-icee-dark hover:bg-icee-card text-[10px] font-bold text-white border border-icee-border hover:border-icee-orange cursor-pointer transition-colors"
+                >
+                  CUT A
+                </button>
+                <button
+                  onClick={handleCutCenter}
+                  title="Center Mix"
+                  className="py-2 bg-icee-dark hover:bg-icee-card flex items-center justify-center text-icee-orange border border-icee-border hover:border-icee-orange cursor-pointer transition-colors"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={handleCutB}
+                  className="py-2 bg-icee-dark hover:bg-icee-card text-[10px] font-bold text-white border border-icee-border hover:border-icee-orange cursor-pointer transition-colors"
+                >
+                  CUT B
+                </button>
+              </div>
+
+              {/* Crossfader Linear Rail */}
+              <div className="w-full space-y-2">
+                <div className="flex justify-between text-[11px] font-bold">
+                  <span className={crossfader < 0.4 ? 'text-icee-orange' : 'text-icee-text-muted'}>
+                    DECK A
+                  </span>
+                  <span className={crossfader > 0.6 ? 'text-icee-orange' : 'text-icee-text-muted'}>
+                    DECK B
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  aria-label="crossfader"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={crossfader}
+                  onChange={handleCrossfaderChange}
+                  className="w-full h-3 bg-icee-darker border border-icee-border appearance-none cursor-pointer accent-icee-orange"
+                />
+                <div className="flex justify-between text-[9px] text-icee-text-muted">
+                  <span>0.0</span>
+                  <span>0.5</span>
+                  <span>1.0</span>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-3 border-t border-icee-border w-full text-[10px] text-icee-text-muted leading-relaxed">
+                BASS ENERGY DRIVES 3D WEBGL CORE SCALE
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 flex">
+              <DeckChannel deck="B" onStateChange={() => setRefreshKey((k) => k + 1)} />
+            </div>
+          </div>
         </div>
       </div>
     </section>

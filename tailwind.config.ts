@@ -22,8 +22,15 @@ const config: Config = {
         'icee-orange-dark': '#D44E00',
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-display)', 'Space Grotesk', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'Space Grotesk', 'sans-serif'],
+        serif: ['var(--font-serif)', 'Instrument Serif', 'Georgia', 'serif'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'Consolas', 'monospace'],
+      },
+      transitionTimingFunction: {
+        'expo-out': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        'quart-out': 'cubic-bezier(0.25, 1, 0.5, 1)',
+        'editorial': 'cubic-bezier(0.22, 0.61, 0.36, 1)',
       },
       boxShadow: {
         'orange-glow': '0 0 25px -5px rgba(255, 94, 0, 0.45)',
