@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 600" width="1920" height="600">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="auraBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07080B"/>
+      <stop offset="50%" stop-color="#0E1017"/>
+      <stop offset="100%" stop-color="#12131C"/>
+    </linearGradient>
+
+    <!-- Warm Glowing Aurora Radial -->
+    <radialGradient id="orangeGlowAura" cx="85%" cy="20%" r="65%">
+      <stop offset="0%" stop-color="#FF5E00" stop-opacity="0.45"/>
+      <stop offset="35%" stop-color="#FF7700" stop-opacity="0.20"/>
+      <stop offset="70%" stop-color="#0E1017" stop-opacity="0.0"/>
+    </radialGradient>
+
+    <!-- Cool Secondary Ambient Bloom -->
+    <radialGradient id="blueGlowAura" cx="15%" cy="85%" r="50%">
+      <stop offset="0%" stop-color="#2A2E39" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#07080B" stop-opacity="0.0"/>
+    </radialGradient>
+
+    <!-- Noise / Film Grain Filter -->
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" result="noise"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.08 0" in="noise" result="coloredNoise"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+    </filter>
+
+    <!-- Grid Pattern -->
+    <pattern id="dotGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#3E4451" fill-opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Solid Base -->
+  <rect width="1920" height="600" fill="url(#auraBg)"/>
+
+  <!-- Radial Glows -->
+  <rect width="1920" height="600" fill="url(#blueGlowAura)"/>
+  <rect width="1920" height="600" fill="url(#orangeGlowAura)"/>
+
+  <!-- Dot Grid Overlay -->
+  <rect width="1920" height="600" fill="url(#dotGrid)"/>
+
+  <!-- Subtle Film Grain -->
+  <rect width="1920" height="600" fill="#000000" filter="url(#grain)" opacity="0.6"/>
+
+  <!-- Editorial Typographic Accents (Pinterest Aesthetic) -->
+  <g font-family="'JetBrains Mono', 'Courier New', monospace" fill="#E2E8F0" opacity="0.65">
+    <text x="80" y="80" font-size="12" letter-spacing="4">[ ARCHIVE // 2026.04 ]</text>
+    <text x="80" y="105" font-size="11" fill="#FF5E00" letter-spacing="2">SYS.STATION: ICEEFRUIT-CORE</text>
+    <text x="1840" y="80" font-size="12" text-anchor="end" letter-spacing="4">+42.3601° N, -71.0589° W</text>
+  </g>
+
+  <!-- Center Statement Typography -->
+  <g text-anchor="middle">
+    <text x="960" y="320" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="88" font-weight="900" fill="#FFFFFF" letter-spacing="16">ICEEFRUIT</text>
+    <text x="960" y="380" font-family="'JetBrains Mono', 'Courier New', monospace" font-size="16" font-weight="600" fill="#FF5E00" letter-spacing="10">ATMOSPHERIC WEB AUDIO // 3D GRAPHICS CORE</text>
+  </g>
+
+  <!-- Minimal Hairlines & Crosshairs -->
+  <g stroke="#3E4451" stroke-width="1" opacity="0.4">
+    <line x1="80" y1="520" x2="1840" y2="520"/>
+    <line x1="960" y1="120" x2="960" y2="180"/>
+    <line x1="960" y1="440" x2="960" y2="500"/>
+    <!-- Crosshairs -->
+    <path d="M 70 520 L 90 520 M 80 510 L 80 530" stroke="#FF5E00" stroke-width="2"/>
+    <path d="M 1830 520 L 1850 520 M 1840 510 L 1840 530" stroke="#FF5E00" stroke-width="2"/>
+  </g>
+
+  <text x="80" y="555" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94A3B8" letter-spacing="3">STATUS: OPERATIONAL // 60-30-10 MONOCHROME &amp; ORANGE</text>
+  <text x="1840" y="555" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94A3B8" text-anchor="end" letter-spacing="3">DESIGNED FOR HIGH IMPACT</text>
+</svg>
